@@ -5,14 +5,25 @@
 ### __env_configuration__ module directory
 * Here we can define constrains between AWS resoruces. Example:
 ```
-module dhcp_options {
-  source                  = "../generic/dhcp"
-  dhcp_association_vpc_id = "${module.vpc.vpc_id}" (1)
-  dhcp_tags               = "${var.dhcp_tags}"     (2)
-  dhcp_domain             = "${var.dhcp_domain}"   (2)
+variable dhcp_domain {
+  type = "string"
+}
+
+variable dhcp_tags {
+  type = "map"
+}
+
+resource "aws_vpc_dhcp_options" "main_dhcp" {
+    domain_name = "${var.dhcp_domain}" (2)
+    tags = "${var.dhcp_tags}" (2)
+}
+
+resource "aws_vpc_dhcp_options_association" "dns_resolver" {
+    vpc_id = "${aws_vpc.main.id}" (1)
+    dhcp_options_id = "${aws_vpc_dhcp_options.main_dhcp.id}"
 }
 ```
-This generic module dhcp_options use __output__ information from generic module vpc (1), and information from variables that we pass via __environments__ directory (2).
+This generic dhcp options resource. We use information from vpc resource (1), and information from variables that we pass via __environments__ directory (2).
 
 * It will force to set some pieces of configuration fe. tags
 * Here we can define defaults that are common across all environments
