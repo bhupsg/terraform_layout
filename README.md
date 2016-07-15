@@ -1,17 +1,9 @@
-# Example layout for terraform code. 
+# Example layout for terraform code.
 
 ## Principles
 
-### __generic__ module directory
-* Provides granularity for basic resources. 
-* It will force to set some pieces of configuration fe. tags
-* __generic__ direcotry is a set of modules that:
- * have variable definition with defined type (__variables.tf__), at this stage we dont define any environment specific data - no default value allowed, 
- * have nessecary outputs with defined type (__outputs.tf__),
- * is a building block for __"env_configuration"__
-
 ### __env_configuration__ module directory
-* Here we can define constrains between AWS resoruces. Example: 
+* Here we can define constrains between AWS resoruces. Example:
 ```
 module dhcp_options {
   source                  = "../generic/dhcp"
@@ -22,12 +14,13 @@ module dhcp_options {
 ```
 This generic module dhcp_options use __output__ information from generic module vpc (1), and information from variables that we pass via __environments__ directory (2).
 
+* It will force to set some pieces of configuration fe. tags
 * Here we can define defaults that are common across all environments
 * It is a codebase for all environments - so we are forcing all environments to be the same
-* The only resource allowed here is a module from __generic__ directory in order to force consistency in resoruces. 
+* The only resource allowed here is a module from __generic__ directory in order to force consistency in resoruces.
 
 ### __environments__ module directory
-* The only resource allowed here is __env_configuration__ module - that will accecpt all the environment specific variables (__variables.tf__). Example: 
+* The only resource allowed here is __env_configuration__ module - that will accecpt all the environment specific variables (__variables.tf__). Example:
 ```
 module env {
   # Source module
