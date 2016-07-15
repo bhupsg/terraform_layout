@@ -6,10 +6,12 @@ variable dhcp_tags {
   type = "map"
 }
 
-module vpc_dhcp_options {
-  source = "../generic/dhcp"
-  dhcp_association_vpc_id = "${module.vpc.vpc_id}"
-  dhcp_tags = "${var.dhcp_tags}"
-  dhcp_domain = "${var.dhcp_domain}"
+resource "aws_vpc_dhcp_options" "main_dhcp" {
+    domain_name = "${var.dhcp_domain}"
+    tags = "${var.dhcp_tags}"
+}
 
+resource "aws_vpc_dhcp_options_association" "dns_resolver" {
+    vpc_id = "${aws_vpc.main.id}"
+    dhcp_options_id = "${aws_vpc_dhcp_options.main_dhcp.id}"
 }

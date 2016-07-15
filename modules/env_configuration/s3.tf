@@ -6,8 +6,9 @@ variable s3_bucket_tags {
   type = "map"
 }
 
-module s3_config_bucket {
-  source = "../generic/s3"
-  s3_bucket_name = "${var.s3_bucket_name}"
-  s3_bucket_tags = "${var.s3_bucket_tags}"
+resource "aws_s3_bucket" "bucket" {
+    bucket = "${var.s3_bucket_name}"
+    acl = "private"
+    tags = "${var.s3_bucket_tags}"
+    force_destroy = true
 }
