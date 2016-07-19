@@ -19,9 +19,11 @@ variable dhcp_tags {
   }
 }
 
-variable subnet_tags {
+variable publishing_subnet_tags {
   type = "map"
   default = {
     Name = "fb01-subnet"
+    Environment = "fb01"
+    Tier = "publishing"
   }
 }

@@ -28,6 +28,7 @@ This generic dhcp options resource. We use information from vpc resource (1), an
 * It will force to set some pieces of configuration fe. tags
 * Here we can define defaults that are common across all environments
 * It is a codebase for all environments - so we are forcing all environments to be the same
+* The only resource allowed here is a module from __generic__ directory in order to force consistency in resoruces.
 
 ### __environments__ module directory
 * The only resource allowed here is __env_configuration__ module - that will accecpt all the environment specific variables (__variables.tf__). Example:
@@ -58,13 +59,27 @@ module env {
     │   ├── dhcp.tf
     │   ├── s3.tf
     │   └── vpc.tf
-    └── environments
-        ├── acpt
-        │   ├── main.tf
+    ├── environments
+    │   ├── acpt
+    │   │   ├── main.tf
+    │   │   └── variables.tf
+    │   └── ci
+    │       ├── main.tf
+    │       └── variables.tf
+    └── generic
+        ├── dhcp
+        │   ├── dhcp.tf
         │   └── variables.tf
-        └── ci
-            ├── main.tf
-            └── variables.tf
+        ├── s3
+        │   ├── bucket.tf
+        │   ├── outputs.tf
+        │   └── variables.tf
+        └── vpc
+            ├── outputs.tf
+            ├── variables.tf
+            └── vpc.tf
+
+9 directories, 16 files
 ```
 
 terraform remote config \
