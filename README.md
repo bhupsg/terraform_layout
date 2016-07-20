@@ -34,7 +34,7 @@ module publishing {
   instance_type            = "${var.publishing_instance_type}"
 }
 ``` 
-Check __containers/app_subnet__
+Check __containers/app_subnet__.
 ### __environments__ module directory
 * The only resource allowed here is __app_infrastructure__ module - that will accecpt all the environment specific variables (__variables.tf__ for complex type - like maps). Example:
 ```
