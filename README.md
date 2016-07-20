@@ -1,6 +1,6 @@
 # Example layout for terraform code.
 
-## Warnings
+## Warning!
 * We are using terraform 0.7 - at the moment there is only RC version
 * We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870
 
