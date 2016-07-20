@@ -2,34 +2,39 @@
 
 ## Principles
 
-### __env_configuration__ module directory
+### __app_infrastructure__ module directory
 * Here we can define constrains between AWS resoruces. Example:
 ```
-variable dhcp_domain {
-  type = "string"
-}
-
-variable dhcp_tags {
-  type = "map"
-}
-
+(...)
 resource "aws_vpc_dhcp_options" "main_dhcp" {
-    domain_name = "${var.dhcp_domain}" (2)
-    tags = "${var.dhcp_tags}" (2)
+    domain_name = "${var.dhcp_domain}"                                      (2)
+    tags        = "${var.dhcp_tags}"
 }
 
 resource "aws_vpc_dhcp_options_association" "dns_resolver" {
-    vpc_id = "${aws_vpc.main.id}" (1)
+    vpc_id          = "${aws_vpc.main.id}"                                  (1)
     dhcp_options_id = "${aws_vpc_dhcp_options.main_dhcp.id}"
 }
 ```
-This generic dhcp options resource. We use information from vpc resource (1), and information from variables that we pass via __environments__ directory (2).
+In order to setup DHCP we use information from vpc resource (1), and information from variables that we pass via __app_infrastructure__ directory (2).
 
 * It will force to set some pieces of configuration fe. tags
 * Here we can define defaults that are common across all environments
 * It is a codebase for all environments - so we are forcing all environments to be the same
-* The only resource allowed here is a module from __generic__ directory in order to force consistency in resoruces.
-
+* Bigger pices of configuration we can encapsulate into another module. For example publishing tier subnet with nodes, asg, elb etc. 
+```
+(...)
+module publishing {
+  source                   = "../containers/app_subnet"
+  subnet_tags              = "${var.publishing_subnet_tags}"
+  subnet_availability_zone = ["${var.publishing_subnet_availability_zone}"]
+  subnet_cidr_block        = "${var.publishing_subnet_cidr_block}"
+  vpc_id                   = "${aws_vpc.main.id}"
+  ami_id                   = "${var.publishing_ami_id}"
+  instance_type            = "${var.publishing_instance_type}"
+}
+``` 
+Check __containers/app_subnet__
 ### __environments__ module directory
 * The only resource allowed here is __env_configuration__ module - that will accecpt all the environment specific variables (__variables.tf__). Example:
 ```
