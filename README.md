@@ -4,6 +4,24 @@
 * We are using terraform 0.7 - at the moment there is only RC version
 * We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870
 
+## Directory tree
+```
+├── app_infrastructure
+│   ├── dhcp.tf
+│   ├── publishing_subnet.tf
+│   ├── s3.tf
+│   └── vpc.tf
+├── containers
+│   └── app_subnet
+│       ├── asg.tf
+│       ├── subnet.tf
+│       └── variables.tf
+└── environments
+    └── fb01
+        ├── main.tf
+        └── variables.tf
+```
+
 ## Principles
 
 ### __app_infrastructure__ module directory
@@ -61,24 +79,6 @@ module env {
   publishing_ami_id                   = "ami-408c7f28"
   publishing_instance_type            = "t1.micro"
 }
-```
-## Directory tree
-
-```
-├── app_infrastructure
-│   ├── dhcp.tf
-│   ├── publishing_subnet.tf
-│   ├── s3.tf
-│   └── vpc.tf
-├── containers
-│   └── app_subnet
-│       ├── asg.tf
-│       ├── subnet.tf
-│       └── variables.tf
-└── environments
-    └── fb01
-        ├── main.tf
-        └── variables.tf
 ```
 
 terraform remote config \
