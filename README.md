@@ -2,7 +2,7 @@
 
 ## Warning!
 * We are using terraform 0.7 - at the moment there is only RC version
-* We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870
+* We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870 (this layout is allowing that - but it is not obligatory)
 
 ## Directory tree
 ```
