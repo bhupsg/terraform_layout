@@ -1,5 +1,9 @@
 # Example layout for terraform code.
 
+## Warnings
+* We are using terraform 0.7 - at the moment there is only RC version
+* We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870
+
 ## Principles
 
 ### __app_infrastructure__ module directory
