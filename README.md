@@ -54,32 +54,20 @@ module env {
 ## Directory tree
 
 ```
-└── modules
-    ├── env_configuration
-    │   ├── dhcp.tf
-    │   ├── s3.tf
-    │   └── vpc.tf
-    ├── environments
-    │   ├── acpt
-    │   │   ├── main.tf
-    │   │   └── variables.tf
-    │   └── ci
-    │       ├── main.tf
-    │       └── variables.tf
-    └── generic
-        ├── dhcp
-        │   ├── dhcp.tf
-        │   └── variables.tf
-        ├── s3
-        │   ├── bucket.tf
-        │   ├── outputs.tf
-        │   └── variables.tf
-        └── vpc
-            ├── outputs.tf
-            ├── variables.tf
-            └── vpc.tf
-
-9 directories, 16 files
+├── app_infrastructure
+│   ├── dhcp.tf
+│   ├── publishing_subnet.tf
+│   ├── s3.tf
+│   └── vpc.tf
+├── containers
+│   └── app_subnet
+│       ├── asg.tf
+│       ├── subnet.tf
+│       └── variables.tf
+└── environments
+    └── fb01
+        ├── main.tf
+        └── variables.tf
 ```
 
 terraform remote config \
