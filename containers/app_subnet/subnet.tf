@@ -1,4 +1,4 @@
-resource "aws_subnet" "publishing_subnet" {
+resource "aws_subnet" "main" {
     count             = "${length(var.subnet_cidr_block)}"
     vpc_id            = "${var.vpc_id}"
     cidr_block        = "${element(var.subnet_cidr_block, count.index)}"

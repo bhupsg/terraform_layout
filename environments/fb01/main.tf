@@ -18,6 +18,8 @@ module env {
   publishing_subnet_cidr_block        = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
   publishing_subnet_tags              = "${var.publishing_subnet_tags}"
   publishing_subnet_availability_zone = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
-  publishing_ami_id                   = "ami-f9dd458a"
+  publishing_ami_id                   = "ami-4cdd453f"
   publishing_instance_type            = "t1.micro"
+  publishing_instance_count           = "0"
+  publishing_allow_ssh_traffic_from   = ["10.10.5.0/24", "89.76.129.31/32"]
 }

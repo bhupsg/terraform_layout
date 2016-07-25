@@ -21,3 +21,15 @@ variable ami_id {
 variable instance_type {
   type = "string"
 }
+
+variable subnet_instance_count {
+  type = "string"
+}
+
+variable allow_ssh_traffic_from {
+  type = "list"
+}
+
+/*variable app_security_group {
+  type = "string"
+}*/
