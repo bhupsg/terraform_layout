@@ -21,5 +21,8 @@ module env {
   publishing_ami_id                   = "ami-4cdd453f"
   publishing_instance_type            = "t1.micro"
   publishing_instance_count           = "0"
-  publishing_allow_ssh_traffic_from   = ["10.10.5.0/24", "89.76.129.31/32"]
+  publishing_enable_asg               = "0"
+  publishing_allow_ssh_traffic_from   = ["10.10.5.0/24"]
+  publishing_public_ip_addr           = "true"
+  publishing_non_asg_instance_count   = "0"
 }

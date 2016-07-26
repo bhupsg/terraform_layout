@@ -3,6 +3,7 @@ variable s3_bucket_tags {
   default = {
     Name = "s3-fb01-bucket"
   }
+  description = "Tagging for s3 bucket"
 }
 
 variable vpc_tags {
@@ -10,6 +11,7 @@ variable vpc_tags {
   default = {
     Name = "fb01"
   }
+  description = "Tagging for vpc"
 }
 
 variable dhcp_tags {
@@ -17,6 +19,7 @@ variable dhcp_tags {
   default = {
     Name = "fb01-dhcp-options"
   }
+  description = "Tagging for dhcp configuration"
 }
 
 variable publishing_subnet_tags {
@@ -26,4 +29,5 @@ variable publishing_subnet_tags {
     Environment = "fb01"
     Tier = "publishing"
   }
+  description = "Tagging for subnet - good to have Name,Environment and Tier. We are using those tags when we creating resoruces in subnet."
 }
