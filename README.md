@@ -38,8 +38,6 @@ terraform plan
 └── environments
    └── fb01
         ├── main.tf
-        ├── terraform.tfstate
-        ├── terraform.tfstate.backup
         └── variables.tf
 
 ```
