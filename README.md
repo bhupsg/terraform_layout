@@ -4,22 +4,44 @@
 * We are using terraform 0.7 - at the moment there is only RC version
 * We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870 (this layout is allowing that - but it is not obligatory)
 
+## Basic setup
+* create ssh key pair 
+```
+ssh-keygen -f aws_key
+```
+* paste content of public key to __app_infrastructure/keypair.tf__
+* Enter the env directory:
+```
+cd environments/fb01
+terraform plan
+```
+
+
 ## Directory tree
 ```
 ├── app_infrastructure
 │   ├── dhcp.tf
+│   ├── keypair.tf
+│   ├── publishing_routing.tf
+│   ├── publishing_security.tf
 │   ├── publishing_subnet.tf
 │   ├── s3.tf
 │   └── vpc.tf
 ├── containers
 │   └── app_subnet
 │       ├── asg.tf
+│       ├── ec2_instance.tf
+│       ├── route_assoc.tf
+│       ├── security.tf
 │       ├── subnet.tf
 │       └── variables.tf
 └── environments
-    └── fb01
+   └── fb01
         ├── main.tf
+        ├── terraform.tfstate
+        ├── terraform.tfstate.backup
         └── variables.tf
+
 ```
 
 ## Principles
