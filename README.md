@@ -13,6 +13,7 @@ ssh-keygen -f aws_key
 * Enter the env directory:
 ```
 cd environments/fb01
+terraform get
 terraform plan
 ```
 
