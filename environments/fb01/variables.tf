@@ -1,5 +1,5 @@
 variable s3_bucket_tags {
-  type = "map"
+  type    = "map"
   default = {
     Name = "s3-fb01-bucket"
   }
@@ -7,7 +7,7 @@ variable s3_bucket_tags {
 }
 
 variable vpc_tags {
-  type = "map"
+  type    = "map"
   default = {
     Name = "fb01"
   }
@@ -15,7 +15,7 @@ variable vpc_tags {
 }
 
 variable dhcp_tags {
-  type = "map"
+  type    = "map"
   default = {
     Name = "fb01-dhcp-options"
   }
@@ -23,11 +23,11 @@ variable dhcp_tags {
 }
 
 variable publishing_subnet_tags {
-  type = "map"
+  type    = "map"
   default = {
-    Name = "fb01-subnet"
+    Name        = "fb01-subnet"
     Environment = "fb01"
-    Tier = "publishing"
+    Tier        = "publishing"
   }
   description = "Tagging for subnet - good to have Name,Environment and Tier. We are using those tags when we creating resoruces in subnet."
 }
