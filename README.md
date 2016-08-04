@@ -4,6 +4,26 @@
 * We are using terraform 0.7 - at the moment there is only RC version
 * We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870 (this layout is allowing that - but it is not obligatory)
 
+## Done
+* VPC definition
+* s3 bucket for tf state
+* dhcp configuration
+* Subnet container
+  * routing table support
+  * public ip toggle
+  * sg support
+  * subnet tagging
+  * subnet AZ support
+  * instance count for ASG and static 
+  * allow ssh from list of hosts
+
+## Plans
+* RDS support
+* Support for management env
+* IAM resources
+* Multi AWS account support
+* Module outputs
+
 ## Basic setup
 * create ssh key pair 
 ```
