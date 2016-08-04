@@ -4,6 +4,9 @@
 * We are using terraform 0.7 - at the moment there is only RC version
 * We are using nested modules that are bugged: https://github.com/hashicorp/terraform/issues/5870 (this layout is allowing that - but it is not obligatory)
 
+## Ongoing implementation
+* Toggle for ELB 
+
 ## Done
 * VPC definition
 * s3 bucket for tf state
@@ -14,7 +17,7 @@
   * sg support
   * subnet tagging
   * subnet AZ support
-  * instance count for ASG and static 
+  * instance count for ASG and static
   * allow ssh from list of hosts
 
 ## Plans
@@ -26,7 +29,7 @@
 * Optional NAT support
 
 ## Basic setup
-* create ssh key pair 
+* create ssh key pair
 ```
 ssh-keygen -f aws_key
 ```
@@ -87,7 +90,7 @@ In order to setup DHCP we use information from vpc resource (1), and information
 * It will force to set some pieces of configuration fe. tags
 * Here we can define defaults that are common across all environments
 * It is a codebase for all environments - so we are forcing all environments to be the same
-* Bigger pices of configuration we can encapsulate into another module. For example publishing tier subnet with nodes, asg, elb etc. 
+* Bigger pices of configuration we can encapsulate into another module. For example publishing tier subnet with nodes, asg, elb etc.
 ```
 module publishing {
   source                   = "../containers/app_subnet"
@@ -105,7 +108,7 @@ module publishing {
   non_asg_instance_count   = "${var.publishing_non_asg_instance_count}"
   enable_asg               = "${var.publishing_enable_asg}"
 }
-``` 
+```
 Check __containers/app_subnet__.
 ### __environments__ module directory
 * The only resource allowed here is __app_infrastructure__ module - that will accecpt all the environment specific variables (__variables.tf__ for complex type - like maps). Example:
@@ -113,16 +116,16 @@ Check __containers/app_subnet__.
 module env {
   # Source module
   source                              = "../../app_infrastructure"
-  
+
   s3_bucket_name                      = "s3-fb01-bucket"
   s3_bucket_tags                      = "${var.s3_bucket_tags}"
-  
+
   vpc_tags                            = "${var.vpc_tags}"
   vpc_cidr_block                      = "10.10.0.0/16"
-  
+
   dhcp_domain                         = "fb01.doman"
   dhcp_tags                           = "${var.dhcp_tags}"
-  
+
   publishing_subnet_cidr_block        = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
   publishing_subnet_tags              = "${var.publishing_subnet_tags}"
   publishing_subnet_availability_zone = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
