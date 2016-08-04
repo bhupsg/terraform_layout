@@ -23,6 +23,7 @@ terraform plan
 ├── app_infrastructure
 │   ├── dhcp.tf
 │   ├── keypair.tf
+│   ├── publishing_elb.tf
 │   ├── publishing_routing.tf
 │   ├── publishing_security.tf
 │   ├── publishing_subnet.tf
@@ -32,12 +33,13 @@ terraform plan
 │   └── app_subnet
 │       ├── asg.tf
 │       ├── ec2_instance.tf
+│       ├── outputs.tf
 │       ├── route_assoc.tf
 │       ├── security.tf
 │       ├── subnet.tf
 │       └── variables.tf
 └── environments
-   └── fb01
+    └── fb01
         ├── main.tf
         └── variables.tf
 
@@ -66,7 +68,6 @@ In order to setup DHCP we use information from vpc resource (1), and information
 * It is a codebase for all environments - so we are forcing all environments to be the same
 * Bigger pices of configuration we can encapsulate into another module. For example publishing tier subnet with nodes, asg, elb etc. 
 ```
-(...)
 module publishing {
   source                   = "../containers/app_subnet"
   subnet_tags              = "${var.publishing_subnet_tags}"
@@ -75,6 +76,13 @@ module publishing {
   vpc_id                   = "${aws_vpc.main.id}"
   ami_id                   = "${var.publishing_ami_id}"
   instance_type            = "${var.publishing_instance_type}"
+  asg_instance_count       = "${var.publishing_instance_count}"
+  allow_ssh_traffic_from   = "${var.publishing_allow_ssh_traffic_from}"
+  app_security_groups      = ["${aws_security_group.publishing_sg.id}"]
+  routing_table            = "${aws_route_table.publishing.id}"
+  public_ip_addr_toggle    = "${var.publishing_public_ip_addr}"
+  non_asg_instance_count   = "${var.publishing_non_asg_instance_count}"
+  enable_asg               = "${var.publishing_enable_asg}"
 }
 ``` 
 Check __containers/app_subnet__.
@@ -84,21 +92,26 @@ Check __containers/app_subnet__.
 module env {
   # Source module
   source                              = "../../app_infrastructure"
-  # s3 module config
+  
   s3_bucket_name                      = "s3-fb01-bucket"
   s3_bucket_tags                      = "${var.s3_bucket_tags}"
-  # vpc module config
+  
   vpc_tags                            = "${var.vpc_tags}"
   vpc_cidr_block                      = "10.10.0.0/16"
-  # dhcp module config
+  
   dhcp_domain                         = "fb01.doman"
   dhcp_tags                           = "${var.dhcp_tags}"
-  # subnet configuration
+  
   publishing_subnet_cidr_block        = ["10.10.10.0/24", "10.10.11.0/24", "10.10.12.0/24"]
   publishing_subnet_tags              = "${var.publishing_subnet_tags}"
   publishing_subnet_availability_zone = ["eu-west-1a", "eu-west-1b", "eu-west-1c"]
-  publishing_ami_id                   = "ami-408c7f28"
+  publishing_ami_id                   = "ami-4cdd453f"
   publishing_instance_type            = "t1.micro"
+  publishing_instance_count           = "0"
+  publishing_enable_asg               = "0"
+  publishing_allow_ssh_traffic_from   = ["10.10.5.0/24"]
+  publishing_public_ip_addr           = "true"
+  publishing_non_asg_instance_count   = "0"
 }
 ```
 
