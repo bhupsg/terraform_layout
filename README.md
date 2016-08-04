@@ -23,6 +23,7 @@
 * IAM resources
 * Multi AWS account support
 * Module outputs
+* Optional NAT support
 
 ## Basic setup
 * create ssh key pair 
